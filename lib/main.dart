@@ -35,15 +35,15 @@ class _FlappyBirdGameState extends State<FlappyBirdGame>
   int score = 0;
   int bestScore = 0;
 
-  // 새 위치 및 물리
+  // 새 위치 및 물리 (쉽게 조정)
   double birdY = 0;
   double birdVelocity = 0;
-  double gravity = 0.8;
-  double jumpStrength = -12;
+  double gravity = 0.6;  // 중력 감소 (0.8 → 0.6)
+  double jumpStrength = -10;  // 점프력 감소 (-12 → -10)
 
-  // 파이프
+  // 파이프 (쉽게 조정)
   List<Pipe> pipes = [];
-  double pipeSpeed = 3;
+  double pipeSpeed = 2.5;  // 속도 감소 (3 → 2.5)
   Timer? gameTimer;
   Timer? pipeTimer;
 
@@ -89,8 +89,8 @@ class _FlappyBirdGameState extends State<FlappyBirdGame>
       }
     });
 
-    // 파이프 생성 (1.5초마다)
-    pipeTimer = Timer.periodic(Duration(milliseconds: 1500), (timer) {
+    // 파이프 생성 (2초마다로 변경 - 더 여유롭게)
+    pipeTimer = Timer.periodic(Duration(milliseconds: 2000), (timer) {
       if (!gameOver) {
         addPipe();
       }
@@ -123,9 +123,9 @@ class _FlappyBirdGameState extends State<FlappyBirdGame>
   }
 
   void addPipe() {
-    double gapHeight = 160;
-    double minHeight = 100;
-    double maxHeight = 300;
+    double gapHeight = 200;  // 간격 넓히기 (160 → 200)
+    double minHeight = 80;   // 최소 높이 줄이기 (100 → 80)
+    double maxHeight = 250;  // 최대 높이 줄이기 (300 → 250)
     double pipeHeight = minHeight + Random().nextDouble() * (maxHeight - minHeight);
     
     pipes.add(Pipe(
@@ -152,16 +152,16 @@ class _FlappyBirdGameState extends State<FlappyBirdGame>
   }
 
   void checkCollision() {
-    // 바닥이나 천장 충돌
-    if (birdY > 270 || birdY < -270) {
+    // 바닥이나 천장 충돌 (여유 공간 증가)
+    if (birdY > 280 || birdY < -280) {
       endGame();
       return;
     }
 
-    // 파이프 충돌
+    // 파이프 충돌 (충돌 감지를 더 관대하게)
     for (Pipe pipe in pipes) {
-      if (pipe.x > -80 && pipe.x < 80) {
-        if (birdY < -300 + pipe.topHeight + 20 || birdY > 300 - pipe.bottomHeight - 20) {
+      if (pipe.x > -70 && pipe.x < 70) {  // 충돌 범위 축소
+        if (birdY < -300 + pipe.topHeight + 30 || birdY > 300 - pipe.bottomHeight - 30) {  // 여유 공간 증가 (20 → 30)
           endGame();
           return;
         }
@@ -195,6 +195,17 @@ class _FlappyBirdGameState extends State<FlappyBirdGame>
     gameTimer?.cancel();
     pipeTimer?.cancel();
     birdAnimationController.repeat(reverse: true);
+  }
+
+  String _getScoreMessage(int score) {
+    if (score >= 50) return "🏆 전설적이에요! 마스터급!";
+    if (score >= 30) return "🌟 대단해요! 전문가네요!";
+    if (score >= 20) return "🎯 훌륭해요! 고수에요!";
+    if (score >= 15) return "👏 멋져요! 실력자네요!";
+    if (score >= 10) return "🎉 좋아요! 꽤 잘하시네요!";
+    if (score >= 5) return "😊 괜찮아요! 연습하면 더 잘할 수 있어요!";
+    if (score >= 1) return "🐦 첫 점수! 좋은 시작이에요!";
+    return "💪 다시 도전해보세요! 할 수 있어요!";
   }
 
   @override
@@ -392,6 +403,12 @@ class _FlappyBirdGameState extends State<FlappyBirdGame>
                               Text(
                                 '최고 점수: $bestScore',
                                 style: TextStyle(fontSize: 24, color: Colors.red, fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(height: 10),
+                              Text(
+                                _getScoreMessage(score),
+                                style: TextStyle(fontSize: 16, color: Colors.blue.shade600, fontWeight: FontWeight.w500),
+                                textAlign: TextAlign.center,
                               ),
                               SizedBox(height: 20),
                             ],
