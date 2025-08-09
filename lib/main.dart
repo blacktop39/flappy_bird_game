@@ -35,15 +35,15 @@ class _FlappyBirdGameState extends State<FlappyBirdGame>
   int score = 0;
   int bestScore = 0;
 
-  // 새 위치 및 물리 (쉽게 조정)
+  // 새 위치 및 물리 (더욱 쉽게 조정)
   double birdY = 0;
   double birdVelocity = 0;
-  double gravity = 0.6;  // 중력 감소 (0.8 → 0.6)
-  double jumpStrength = -10;  // 점프력 감소 (-12 → -10)
+  double gravity = 0.5;  // 중력 더 감소 (0.6 → 0.5)
+  double jumpStrength = -9;  // 점프력 더 감소 (-10 → -9)
 
-  // 파이프 (쉽게 조정)
+  // 파이프 (더욱 쉽게 조정)
   List<Pipe> pipes = [];
-  double pipeSpeed = 2.5;  // 속도 감소 (3 → 2.5)
+  double pipeSpeed = 2.0;  // 속도 더 감소 (2.5 → 2.0)
   Timer? gameTimer;
   Timer? pipeTimer;
 
@@ -89,8 +89,8 @@ class _FlappyBirdGameState extends State<FlappyBirdGame>
       }
     });
 
-    // 파이프 생성 (2초마다로 변경 - 더 여유롭게)
-    pipeTimer = Timer.periodic(Duration(milliseconds: 2000), (timer) {
+    // 파이프 생성 (2.5초마다로 변경 - 훨씬 더 여유롭게)
+    pipeTimer = Timer.periodic(Duration(milliseconds: 2500), (timer) {
       if (!gameOver) {
         addPipe();
       }
@@ -123,9 +123,9 @@ class _FlappyBirdGameState extends State<FlappyBirdGame>
   }
 
   void addPipe() {
-    double gapHeight = 200;  // 간격 넓히기 (160 → 200)
-    double minHeight = 80;   // 최소 높이 줄이기 (100 → 80)
-    double maxHeight = 250;  // 최대 높이 줄이기 (300 → 250)
+    double gapHeight = 250;  // 간격 더 넓히기 (200 → 250)
+    double minHeight = 60;   // 최소 높이 더 줄이기 (80 → 60)
+    double maxHeight = 200;  // 최대 높이 더 줄이기 (250 → 200)
     double pipeHeight = minHeight + Random().nextDouble() * (maxHeight - minHeight);
     
     pipes.add(Pipe(
@@ -152,16 +152,24 @@ class _FlappyBirdGameState extends State<FlappyBirdGame>
   }
 
   void checkCollision() {
-    // 바닥이나 천장 충돌 (여유 공간 증가)
-    if (birdY > 280 || birdY < -280) {
+    // 바닥이나 천장 충돌 (훨씬 더 관대하게)
+    if (birdY > 290 || birdY < -290) {  // 280 → 290
       endGame();
       return;
     }
 
-    // 파이프 충돌 (충돌 감지를 더 관대하게)
+    // 파이프 충돌 (매우 관대하게 설정)
     for (Pipe pipe in pipes) {
-      if (pipe.x > -70 && pipe.x < 70) {  // 충돌 범위 축소
-        if (birdY < -300 + pipe.topHeight + 30 || birdY > 300 - pipe.bottomHeight - 30) {  // 여유 공간 증가 (20 → 30)
+      // 새가 파이프 중앙 근처에 있을 때만 충돌 체크 (범위 더 축소)
+      if (pipe.x > -40 && pipe.x < 40) {  // 70 → 40 (충돌 범위 대폭 축소)
+        // 새의 크기를 고려한 여유 공간 대폭 증가
+        double birdRadius = 15; // 새의 반지름
+        double safetyMargin = 50; // 안전 여유 공간 대폭 증가 (30 → 50)
+        
+        double topCollisionPoint = -300 + pipe.topHeight + birdRadius + safetyMargin;
+        double bottomCollisionPoint = 300 - pipe.bottomHeight - birdRadius - safetyMargin;
+        
+        if (birdY < topCollisionPoint || birdY > bottomCollisionPoint) {
           endGame();
           return;
         }
