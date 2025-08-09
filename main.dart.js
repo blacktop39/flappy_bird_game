@@ -28285,17 +28285,17 @@ s.Ht()},
 w1(){var s=this
 s.aA(new A.VD(s))
 s.at=A.a53(A.cE(0,16),new A.VE(s))
-s.ax=A.a53(A.cE(0,2000),new A.VF(s))},
+s.ax=A.a53(A.cE(0,2500),new A.VF(s))},
 V6(){this.aA(new A.VH(this))},
 CQ(){var s=this
 if(s.e){s.DC()
 return}if(!s.d){s.w1()
 return}s.aA(new A.VB(s))},
 Pt(){var s,r,q,p,o,n=this,m=n.w
-if(m>280||m<-280){n.C4()
+if(m>290||m<-290){n.C4()
 return}for(s=n.Q,r=s.length,q=0;q<r;++q){p=s[q]
 o=p.a
-if(o>-70&&o<70)if(m<-300+p.b+30||m>300-p.c-30){n.C4()
+if(o>-40&&o<40)if(m<-300+p.b+15+50||m>300-p.c-15-50){n.C4()
 return}}},
 C4(){var s,r=this
 r.aA(new A.VA(r))
@@ -28367,14 +28367,14 @@ if(!s.e)s.V6()},
 $S:72}
 A.VF.prototype={
 $1(a){var s,r=this.a
-if(!r.e){s=80+B.v6.TA()*170
-r.Q.push(new A.ik(400,s,600-s-200))}},
+if(!r.e){s=60+B.v6.TA()*140
+r.Q.push(new A.ik(400,s,600-s-250))}},
 $S:72}
 A.VH.prototype={
-$0(){var s,r,q,p=this.a,o=p.x+=0.6
+$0(){var s,r,q,p=this.a,o=p.x+=0.5
 p.w+=o
 for(o=p.Q,s=0;s<o.length;++s){r=o[s]
-q=r.a-=2.5
+q=r.a-=2
 if(!r.d&&q<-50){r.d=!0;++p.f}}if(!!o.fixed$length)A.a6(A.aC("removeWhere"))
 B.b.kP(o,new A.VG(),!0)
 p.Pt()},
@@ -28383,7 +28383,7 @@ A.VG.prototype={
 $1(a){return a.a<-100},
 $S:309}
 A.VB.prototype={
-$0(){this.a.x=-10},
+$0(){this.a.x=-9},
 $S:0}
 A.VA.prototype={
 $0(){var s,r=this.a
