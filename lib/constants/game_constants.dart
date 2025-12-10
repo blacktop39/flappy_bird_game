@@ -7,72 +7,71 @@ import 'package:flutter/material.dart';
 class GamePhysics {
   GamePhysics._();
 
-  /// 중력 가속도
-  static const double gravity = 0.6;
+  /// 플레이어 이동 속도
+  static const double playerSpeed = 5.0;
 
-  /// 점프 시 초기 속도
-  static const double jumpVelocity = -11.0;
+  /// 총알 속도
+  static const double bulletSpeed = 8.0;
 
-  /// 최대 낙하 속도 (터미널 속도)
-  static const double maxFallVelocity = 15.0;
+  /// 적 기본 속도
+  static const double enemySpeed = 2.0;
 
-  /// 최대 상승 속도
-  static const double maxRiseVelocity = -15.0;
+  /// 적 속도 증가율 (웨이브마다)
+  static const double enemySpeedIncrement = 0.3;
 }
 
-/// 파이프 관련 상수
-class PipeConstants {
-  PipeConstants._();
+/// 적 관련 상수
+class EnemyConstants {
+  EnemyConstants._();
 
-  /// 파이프 이동 속도 (픽셀/프레임)
-  static const double speed = 3.0;
+  /// 적 크기
+  static const double size = 30.0;
 
-  /// 파이프 너비
-  static const double width = 60.0;
+  /// 적 생성 간격 (밀리초)
+  static const int spawnInterval = 1000;
 
-  /// 파이프 사이 간격
-  static const double gapHeight = 180.0;
+  /// 초기 웨이브당 적 수
+  static const int initialEnemiesPerWave = 3;
 
-  /// 파이프 최소 높이
-  static const double minHeight = 80.0;
+  /// 웨이브당 적 증가 수
+  static const int enemiesIncrement = 2;
 
-  /// 파이프 최대 높이
-  static const double maxHeight = 280.0;
+  /// 적 체력
+  static const int health = 1;
 
-  /// 파이프 생성 간격 (밀리초)
-  static const int spawnInterval = 2000;
-
-  /// 파이프 캡 높이
-  static const double capHeight = 30.0;
-
-  /// 파이프 캡 추가 너비 (양쪽)
-  static const double capExtraWidth = 10.0;
+  /// 적 제거 시 점수
+  static const int scoreValue = 10;
 }
 
-/// 새 관련 상수
-class BirdConstants {
-  BirdConstants._();
+/// 플레이어 관련 상수
+class PlayerConstants {
+  PlayerConstants._();
 
-  /// 새의 너비
-  static const double width = 40.0;
+  /// 플레이어 크기
+  static const double size = 40.0;
 
-  /// 새의 높이
-  static const double height = 30.0;
+  /// 플레이어 반지름 (충돌 감지용)
+  static const double radius = 20.0;
 
-  /// 새의 반지름 (충돌 감지용)
-  static const double radius = 15.0;
+  /// 사격 쿨다운 (밀리초)
+  static const int shootCooldown = 200;
 
-  /// 새의 X 위치 (화면에서 고정)
-  static const double xPosition = 150.0;
+  /// 플레이어 체력
+  static const int maxHealth = 3;
+}
 
-  /// 회전 각도 계산 계수
-  static const double rotationFactor = 0.04;
+/// 총알 관련 상수
+class BulletConstants {
+  BulletConstants._();
 
-  /// 최대 회전 각도 (라디안)
-  static const double maxRotation = 1.5;
+  /// 총알 크기
+  static const double size = 8.0;
 
-  /// 날개짓 애니메이션 주기 (밀리초)
-  static const int wingFlapDuration = 300;
+  /// 총알 반지름
+  static const double radius = 4.0;
+
+  /// 총알 데미지
+  static const int damage = 1;
 }
 
 /// 게임 영역 크기
@@ -99,14 +98,17 @@ class GameAreaConstants {
 class CollisionConstants {
   CollisionConstants._();
 
-  /// 파이프 충돌 감지 X 범위 (좌측)
-  static const double pipeXRangeLeft = -50.0;
-
-  /// 파이프 충돌 감지 X 범위 (우측)
-  static const double pipeXRangeRight = 50.0;
-
-  /// 충돌 안전 마진
-  static const double safetyMargin = 35.0;
+  /// 원형 충돌 감지 (반지름 합 기반)
+  static bool circleCollision(
+    double x1, double y1, double r1,
+    double x2, double y2, double r2,
+  ) {
+    final dx = x1 - x2;
+    final dy = y1 - y2;
+    final distance = dx * dx + dy * dy;
+    final radiusSum = r1 + r2;
+    return distance < radiusSum * radiusSum;
+  }
 }
 
 /// UI 관련 상수
@@ -142,29 +144,29 @@ class UIConstants {
 class GameColors {
   GameColors._();
 
-  /// 하늘 그라데이션 시작
-  static const Color skyGradientStart = Color(0xFF87CEEB);
+  /// 배경 그라데이션 시작
+  static const Color bgGradientStart = Color(0xFF1a1a2e);
 
-  /// 하늘 그라데이션 끝
-  static const Color skyGradientEnd = Color(0xFF98FB98);
+  /// 배경 그라데이션 끝
+  static const Color bgGradientEnd = Color(0xFF16213e);
 
-  /// 파이프 그라데이션 밝은색
-  static const Color pipeLightGreen = Color(0xFF66BB6A);
+  /// 플레이어 색상
+  static const Color player = Color(0xFF00d4ff);
 
-  /// 파이프 그라데이션 어두운색
-  static const Color pipeDarkGreen = Color(0xFF2E7D32);
+  /// 플레이어 테두리
+  static const Color playerBorder = Color(0xFF0095b3);
 
-  /// 파이프 테두리
-  static const Color pipeBorder = Color(0xFF1B5E20);
+  /// 적 색상
+  static const Color enemy = Color(0xFFff4757);
 
-  /// 새 몸통 색
-  static const Color birdBody = Color(0xFFFDD835);
+  /// 적 테두리
+  static const Color enemyBorder = Color(0xFFd63447);
 
-  /// 새 테두리/부리 색
-  static const Color birdAccent = Color(0xFFFF6F00);
+  /// 총알 색상
+  static const Color bullet = Color(0xFFffa502);
 
-  /// 새 눈 색
-  static const Color birdEye = Colors.black;
+  /// 총알 빛
+  static const Color bulletGlow = Color(0xFFff6348);
 
   /// 점수판 배경
   static Color scoreBackground = Colors.white.withOpacity(0.9);

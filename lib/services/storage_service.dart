@@ -4,7 +4,7 @@ library;
 
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/game_models.dart';
+import '../models/shooter_models.dart';
 
 /// 스토리지 서비스 싱글톤
 class StorageService {
