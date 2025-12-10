@@ -21,10 +21,15 @@ jobs:
         channel: 'stable'
         
     - name: Install dependencies
-      run: flutter pub get
-      
+      run: |
+        flutter pub get
+        flutter pub upgrade
+
+    - name: Analyze code
+      run: flutter analyze --no-fatal-infos
+
     - name: Build web
-      run: flutter build web --release --base-href "/flappy_bird_game/"
+      run: flutter build web --release --base-href "/flappy_bird_game/" --no-tree-shake-icons
       
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
