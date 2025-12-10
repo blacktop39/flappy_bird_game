@@ -3,7 +3,6 @@
 library;
 
 import 'dart:async';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/shooter_models.dart';
 import '../constants/game_constants.dart';
@@ -115,7 +114,6 @@ class ShooterGameController extends StateNotifier<ShooterGameState> {
       }
 
       // 총알과 충돌 체크
-      bool hitByBullet = false;
       for (final bullet in updatedBullets.toList()) {
         if (CollisionConstants.circleCollision(
           bullet.x,
@@ -127,7 +125,6 @@ class ShooterGameController extends StateNotifier<ShooterGameState> {
         )) {
           enemy.takeDamage(BulletConstants.damage);
           updatedBullets.remove(bullet);
-          hitByBullet = true;
           break;
         }
       }

@@ -406,10 +406,10 @@ file:///mnt/c/Users/sangho.jeon/Documents/flappy_bird_game/.dart_tool/flutter_bu
 file:///mnt/c/Users/sangho.jeon/Documents/flappy_bird_game/.dart_tool/package_config.json
 file:///mnt/c/Users/sangho.jeon/Documents/flappy_bird_game/lib/constants/game_constants.dart
 file:///mnt/c/Users/sangho.jeon/Documents/flappy_bird_game/lib/main.dart
-file:///mnt/c/Users/sangho.jeon/Documents/flappy_bird_game/lib/models/game_models.dart
-file:///mnt/c/Users/sangho.jeon/Documents/flappy_bird_game/lib/providers/game_provider.dart
+file:///mnt/c/Users/sangho.jeon/Documents/flappy_bird_game/lib/models/shooter_models.dart
+file:///mnt/c/Users/sangho.jeon/Documents/flappy_bird_game/lib/providers/shooter_provider.dart
 file:///mnt/c/Users/sangho.jeon/Documents/flappy_bird_game/lib/services/storage_service.dart
-file:///mnt/c/Users/sangho.jeon/Documents/flappy_bird_game/lib/widgets/game_widgets.dart
+file:///mnt/c/Users/sangho.jeon/Documents/flappy_bird_game/lib/widgets/shooter_widgets.dart
 file:///mnt/c/Users/sangho.jeon/Documents/flutter/bin/cache/dart-sdk/lib/libraries.json
 file:///mnt/c/Users/sangho.jeon/Documents/flutter/bin/cache/flutter_web_sdk/kernel/dart2js_platform.dill
 file:///mnt/c/Users/sangho.jeon/Documents/flutter/packages/flutter/lib/animation.dart

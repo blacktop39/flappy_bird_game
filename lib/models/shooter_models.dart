@@ -3,7 +3,6 @@
 library;
 
 import 'dart:math';
-import 'package:flutter/material.dart';
 import '../constants/game_constants.dart';
 
 /// 플레이어 모델
