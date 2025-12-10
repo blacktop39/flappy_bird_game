@@ -167,7 +167,7 @@ class GameColors {
   static const Color birdEye = Colors.black;
 
   /// 점수판 배경
-  static Color scoreBackground = Colors.white.withValues(alpha: 0.9);
+  static Color scoreBackground = Colors.white.withOpacity(0.9);
 
   /// 점수판 텍스트
   static const Color scoreText = Color(0xFFE65100);
@@ -179,7 +179,7 @@ class GameColors {
   static const Color modalBackground = Colors.white;
 
   /// 구름 색
-  static Color cloudColor = Colors.white.withValues(alpha: 0.7);
+  static Color cloudColor = Colors.white.withOpacity(0.7);
 
   /// 버튼 색
   static const Color buttonPrimary = Color(0xFFFF6F00);
@@ -188,7 +188,7 @@ class GameColors {
   static const Color buttonText = Colors.white;
 
   /// 그림자 색
-  static Color shadowColor = Colors.black.withValues(alpha: 0.3);
+  static Color shadowColor = Colors.black.withOpacity(0.3);
 }
 
 /// 게임 타이밍 상수

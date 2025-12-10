@@ -93,7 +93,7 @@ class _BirdPainter extends CustomPainter {
       ..quadraticBezierTo(10, wingY + 5, 15, wingY)
       ..close();
     final wingPaint = Paint()
-      ..color = GameColors.birdBody.withValues(alpha: 0.8)
+      ..color = GameColors.birdBody.withOpacity(0.8)
       ..style = PaintingStyle.fill;
     canvas.drawPath(wingPath, wingPaint);
   }
@@ -266,7 +266,7 @@ class ParticleWidget extends StatelessWidget {
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: particle.color.withValues(alpha: 0.5),
+                color: particle.color.withOpacity(0.5),
                 blurRadius: 4,
                 spreadRadius: 1,
               ),
@@ -371,7 +371,7 @@ class ScoreDisplay extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.black.withValues(alpha: 0.3),
+                color: Colors.black.withOpacity(0.3),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Text(
